@@ -10,7 +10,7 @@ define([
 ], function ($, utils) {
     'use strict';
 
-    var globalOptions = {
+    const globalOptions = {
         optionsSelector: '.product-custom-option',
         optionConfig: {}
     };
@@ -22,7 +22,7 @@ define([
         },
 
         _create: function createPriceOptionRelations() {
-            var options = $(this.options.optionsSelector, this.element);
+            const options = $(this.options.optionsSelector, this.element);
 
             this.updateOptions();
 
@@ -30,42 +30,42 @@ define([
         },
 
         _onOptionChanged: function onOptionChanged(event) {
-            var changedOption = $(event.target);
+            const changedOption = $(event.target);
 
             this.updateOptions(changedOption);
         },
 
         updateOptions: function updateOptions(changedOption) {
-            var self = this;
+            const self = this;
 
-            var changedOptionId = changedOption ? utils.findOptionId(changedOption[0]) : 0;
+            const changedOptionId = changedOption ? utils.findOptionId(changedOption[0]) : 0;
 
-            var selectedOptions = this.getOptionValues();
+            const selectedOptions = this.getOptionValues();
 
-            var options = $(this.options.optionsSelector, this.element);
+            const options = $(this.options.optionsSelector, this.element);
 
             options.each(function() {
-                var option = $(this);
+                const option = $(this);
 
-                var optionId = utils.findOptionId(option[0]);
+                const optionId = utils.findOptionId(option[0]);
 
                 if (optionId !== changedOptionId && self.options.optionConfig[optionId]) {
-                    var optionType = option.prop('type');
+                    const optionType = option.prop('type');
 
-                    var optionValue = option.val();
+                    const optionValue = option.val();
 
                     switch (optionType) {
                         case 'select-one':
                         case 'select-multiple':
                             option.find('option').each(function() {
-                                var value = $(this);
+                                const value = $(this);
 
                                 if (this.value) {
                                     if (self.options.optionConfig[optionId][this.value]) {
-                                        var allowed = true;
-                                        var hide = false;
+                                        let allowed = true;
+                                        let hide = false;
 
-                                        var relations = self.options.optionConfig[optionId][this.value];
+                                        const relations = self.options.optionConfig[optionId][this.value];
 
                                         $.each(relations, function(relationOptionId, optionRelations) {
                                             $.each(optionRelations, function(relationOptionValue, relationType) {
@@ -102,7 +102,7 @@ define([
                                             value.show();
                                         } else {
                                             if (Array.isArray(optionValue)) {
-                                                var valueIndex = optionValue.indexOf(this.value);
+                                                const valueIndex = optionValue.indexOf(this.value);
                                                 if (valueIndex !== -1) {
                                                     optionValue.splice(valueIndex, 1);
                                                     option.val(optionValue);
@@ -126,10 +126,10 @@ define([
                         case 'checkbox':
                             if (this.value) {
                                 if (self.options.optionConfig[optionId][this.value]) {
-                                    var allowed = true;
-                                    var hide = false;
+                                    let allowed = true;
+                                    let hide = false;
 
-                                    var relations = self.options.optionConfig[optionId][this.value];
+                                    const relations = self.options.optionConfig[optionId][this.value];
 
                                     $.each(relations, function(relationOptionId, optionRelations) {
                                         $.each(optionRelations, function(relationOptionValue, relationType) {
@@ -180,19 +180,19 @@ define([
         },
 
         getOptionValues: function getOptionValues() {
-            var options = $(this.options.optionsSelector, this.element);
+            const options = $(this.options.optionsSelector, this.element);
 
-            var optionValues = [];
+            const optionValues = [];
 
             options.each(function() {
-                var option = $(this);
-                var optionId = utils.findOptionId(option[0]);
-                var nodeName = option.prop('nodeName');
-                var optionValue = null;
+                const option = $(this);
+                const optionId = utils.findOptionId(option[0]);
+                const nodeName = option.prop('nodeName');
+                let optionValue = null;
                 if (nodeName === 'SELECT') {
                     optionValue = option.val();
                 } else if (nodeName === 'INPUT') {
-                    var type = option.attr('type');
+                    const type = option.attr('type');
                     if (type === 'radio') {
                         if (option.is(':checked')) {
                             optionValue = option.val();

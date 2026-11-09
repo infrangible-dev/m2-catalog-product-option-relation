@@ -4,7 +4,7 @@
  * @license     http://www.opensource.org/licenses/mit-license.php MIT
  */
 
-var config = {
+const config = {
     map: {
         '*': {
             priceOptionRelations: 'Infrangible_CatalogProductOptionRelation/js/price-option-relations'
